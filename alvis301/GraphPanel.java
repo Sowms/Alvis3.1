@@ -28,17 +28,22 @@ public class GraphPanel extends javax.swing.JPanel {
     TSPWindow tw;
     TreeWindow trw;
     int x1,x2,y1,y2;
+    static int openSize, closedSize, pathSize;
     public GraphPanel() {
-        gr = Graph.getInstance();
-        gw = GraphWindow.getInstance();
-        colorMap = ColorMap.getInstance().getMap();
+       openSize = closedSize = pathSize = 0;
     }
    
-    @Override
+     @Override
      public void paintComponent(Graphics g) {
+        try{gr = Graph.getInstance();
+        gw = GraphWindow.getInstance();
+        colorMap = ColorMap.getInstance().getMap();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         setBackground(new java.awt.Color(204, 204, 255));
+        int open = 0;
+        int closed = 0;
+        int path = 0;
         gr = Graph.getInstance();
         gw = GraphWindow.getInstance();
         tw = TSPWindow.getInstance();
@@ -79,10 +84,14 @@ public class GraphPanel extends javax.swing.JPanel {
                         g2d.setStroke(new BasicStroke(2));
                     if(e.getState() == State.pop_path)
                         g2d.setStroke(new BasicStroke(4));
+                    if (e.getState().equals(State.path))
+                        path++;
                     g2d.draw(line);
                 }
             }
         }
+        pathSize = path;
+        System.out.println(pathSize);
         //render nodes
         HashMap nodes = gr.getNodes();
         it = nodes.entrySet().iterator();
@@ -90,6 +99,14 @@ public class GraphPanel extends javax.swing.JPanel {
             Map.Entry pairs = (Map.Entry)it.next();
             Node n = (Node) pairs.getValue();
             double x = n.getX(), y = n.getY();
+            if (n.getNodeID() == gr.getStartID()) 
+                n.setState(State.start);
+            if (n.getNodeID() == gr.getGoalID()) 
+                n.setState(State.goal);
+            if (n.getState().equals(State.open))
+                open++;
+            if (n.getState().equals(State.closed))
+                closed++;
             g2d.setColor(colorMap.get(n.getState()));
             Ellipse2D ellipse = new Ellipse2D.Double(x-4, y-4, 8, 8);
             if (n.getState()==State.start || n.getState()==State.goal || n.getState()==State.pipe) {
@@ -114,7 +131,10 @@ public class GraphPanel extends javax.swing.JPanel {
                 }
             }
         }
-    }
+        openSize = open;
+        closedSize = closed;
+        
+    }catch(Exception e){}}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

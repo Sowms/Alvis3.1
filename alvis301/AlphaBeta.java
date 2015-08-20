@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package alvis301;
 
 import java.util.ArrayList;
@@ -273,18 +268,18 @@ public class AlphaBeta extends Algorithm
                 return;
             Node next = children.get(0);
             gd = (GameNodeData) next.getData();
-            /*if (cur.getState() == alvis3.iitm.ac.in.State.min) {
+            /*if (cur.getState() == alvis301.State.min) {
                         ArrayList<Edge> adjList = cur.getAdjEdgeList();
                         /*for (Edge e : adjList) {
                             if (children.contains(g.getNode(e.getNodeID1())) || children.contains(g.getNode(e.getNodeID2()))) {
-                                e.setState(alvis3.iitm.ac.in.State.path);
+                                e.setState(alvis301.State.path);
                                 updateEdge(e);
                             }
                         }    
                     }*/
             int max = gd.value; Node maxNode = next; int min = gd.value; Node minNode=next;
             for(int i=1;i<children.size();i++){
-                //if (cur.getState() == alvis3.iitm.ac.in.State.max) {
+                //if (cur.getState() == alvis301.State.max) {
                     gd = (GameNodeData) children.get(i).getData();
                     if (gd.value > max) {
                         max = gd.value;
