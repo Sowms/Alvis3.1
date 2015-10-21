@@ -52,6 +52,7 @@ public class GraphPanel extends javax.swing.JPanel {
             //System.out.println("Hello");
             return;
         }
+        System.out.println(tw);
         HashMap edges = gr.getEdges();
         Iterator it = edges.entrySet().iterator();
         while (it.hasNext()) {
@@ -90,8 +91,8 @@ public class GraphPanel extends javax.swing.JPanel {
                 }
             }
         }
-        pathSize = path;
-        System.out.println(pathSize);
+        //pathSize = path;
+        //System.out.println(pathSize);
         //render nodes
         HashMap nodes = gr.getNodes();
         it = nodes.entrySet().iterator();
@@ -99,7 +100,7 @@ public class GraphPanel extends javax.swing.JPanel {
             Map.Entry pairs = (Map.Entry)it.next();
             Node n = (Node) pairs.getValue();
             double x = n.getX(), y = n.getY();
-            if (n.getNodeID() == gr.getStartID()) 
+            if (n.getNodeID() == gr.getStartID() && !n.getState().equals(State.max)) 
                 n.setState(State.start);
             if (n.getNodeID() == gr.getGoalID()) 
                 n.setState(State.goal);
@@ -133,6 +134,7 @@ public class GraphPanel extends javax.swing.JPanel {
         }
         openSize = open;
         closedSize = closed;
+        pathSize = path;
         
     }catch(Exception e){}}
     @SuppressWarnings("unchecked")

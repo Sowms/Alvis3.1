@@ -5,6 +5,7 @@ DATE: 4.12.14
 package alvis301;
 
 import java.awt.Color;
+import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -22,7 +23,7 @@ import org.jfree.ui.RefineryUtilities;
  * @author CHARU CHAUHAN
  */
 
-public class TSPGraphV extends ApplicationFrame{
+public class TSPGraphV extends JFrame{
     
     private XYSeries plot;
     
@@ -36,7 +37,6 @@ public class TSPGraphV extends ApplicationFrame{
     public void addDataSet(Double temp_x,Double tour_y) {
         
         plot.add(temp_x,tour_y);
-        System.out.println("ADDED");
     }
     
     //CREATE DATASET
@@ -63,8 +63,8 @@ public class TSPGraphV extends ApplicationFrame{
     private JFreeChart createChart(final XYDataset dataset) {
         
         final JFreeChart chart = ChartFactory.createXYLineChart(
-            "TEMP VS TOUR COST",      // TITLE
-            "TEMPRATURE",             // X AXIS LABEL
+            "TOUR COST VS TIME",      // TITLE
+            "TIME",             // X AXIS LABEL
             "TOUR COST",              // Y AXIS LABEL
             dataset,                  // DATASET
             PlotOrientation.VERTICAL, //KEEP THE ORIENTATION OF THE AXIS SAME AS THE ORDER IN WHICH WE USED ADD DATASET 

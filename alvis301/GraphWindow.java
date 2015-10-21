@@ -235,6 +235,10 @@ public class GraphWindow extends javax.swing.JFrame {
      public void showGraph() throws InterruptedException {
         graphPanel1.repaint();
         resetPanel();
+        graphPanel1.repaint();
+        resetPanel();
+        graphPanel1.repaint();
+        resetPanel();
     }
     private void resetPanel() {
         if (numAlgo != -1) {
@@ -405,7 +409,17 @@ public class GraphWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void endProcess() {
+         Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+        for (Thread currentThread : threadSet) {
+            String threadName = currentThread.toString();
+            if (threadName.contains("[Thread") && threadName.contains("main")) {
+                System.out.println(threadName);
+                currentThread.interrupt();
+                break;
+            }
+        }
+    }
         
                                    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -453,6 +467,9 @@ public class GraphWindow extends javax.swing.JFrame {
         Graph.setInstance(g);
         graphPanel1.repaint();
         resetPanel();
+        graphPanel1.repaint();
+        resetPanel();
+        
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);    
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -489,6 +506,9 @@ public class GraphWindow extends javax.swing.JFrame {
                 bfs = new BFSAlgorithm(1);
                 bfs.setGraph();
                 bfs.start();
+                //endProcess();
+                graphPanel1.repaint();
+                resetPanel();
                 graphPanel1.repaint();
                 resetPanel();
                 break;
@@ -496,6 +516,9 @@ public class GraphWindow extends javax.swing.JFrame {
                 dfs = new DFSAlgorithm(1);
                 dfs.setGraph();
                 dfs.start();
+                //endProcess();
+                graphPanel1.repaint();
+                resetPanel();
                 graphPanel1.repaint();
                 resetPanel();
                 break;
@@ -517,6 +540,9 @@ public class GraphWindow extends javax.swing.JFrame {
                     Graph.setInstance(g);
                     smgs.setGraph();
                     smgs.start();
+                    //endProcess();
+                    graphPanel1.repaint();
+                    resetPanel();
                     graphPanel1.repaint();
                     resetPanel();
                     break;
@@ -587,7 +613,7 @@ public class GraphWindow extends javax.swing.JFrame {
                 resetPanel();
                 break;
                 }
-            case "[7]":
+            case "[6]":
                 {
                     dcbfhs = new DCBFHS(1);
                     HashMap<Integer,Node> nodes = Graph.getInstance().getNodes();
@@ -609,7 +635,7 @@ public class GraphWindow extends javax.swing.JFrame {
                     resetPanel();
                     break;
                 }
-            case "[8]":
+            case "[7]":
             {
                 dcbss = new DCBSS(1);
                 HashMap<Integer,Node> nodes = Graph.getInstance().getNodes();
@@ -631,21 +657,21 @@ public class GraphWindow extends javax.swing.JFrame {
                     resetPanel();
                     break;
             }
-            case "[9]":
+            case "[8]":
                 dfid = new DFID(1);
                 dfid.setGraph();
                 dfid.start();
                 graphPanel1.repaint();
                 resetPanel();
                 break;
-            case "[10]":
+            case "[9]":
                 idastar = new IDAstar(1);
                 idastar.setGraph();
                 idastar.start();
                 graphPanel1.repaint();
                 resetPanel();
                 break;
-            case "[11]":
+            case "[10]":
                 bss = new BeamStackSearch(1);
                 bss.setGraph();
                 bss.start();

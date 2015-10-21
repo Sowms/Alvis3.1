@@ -52,7 +52,7 @@ public class DFSAlgorithm extends Algorithm {
             Node node = nodePair.get(0);
             if (goalTest(node)) {
                 ReconstructPath(nodePair);
-                display();
+                display();display();
                 return;
             }
             closed.add(nodePair);
@@ -71,7 +71,7 @@ public class DFSAlgorithm extends Algorithm {
                 }
             }
             updateNode(node);
-            display();
+            display();display();
             LinkedList<ArrayList<Node>> children = moveGen(node);
             LinkedList<ArrayList<Node>> noLoops = removeSeen(children);
             open.addAll(0,noLoops);

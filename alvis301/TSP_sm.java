@@ -18,7 +18,7 @@ import org.jfree.ui.RefineryUtilities;
 //FINDS AN OPTIMAL SOLUTION TO TRAVELLING SALESMAN PROBLEM(TSP) USING SIMULATED ANNEALING
 public class TSP_sm extends Algorithm{
     TSPGraphV lg;//to draw the line graph
-    double temprature = 100;
+    double temperature = 100;
     double distance_diff = 0;
     double coolingRate = 0.9999;
     double freezingTemperature = 0.00001;
@@ -149,9 +149,9 @@ public class TSP_sm extends Algorithm{
     	double curr_distance;
         int flag=0;
         int update = 0;
-        //ask the user for the starting temprature
+        //ask the user for the starting temperature
         String temp=getInput("Temparature");
-        temprature=Double.parseDouble(temp);
+        temperature=Double.parseDouble(temp);
         lg = new TSPGraphV("SIMULATED ANNEALING-FIRST RUN",temp);
         //ask the user for the cooling rate
         String cr=getInput("Cooling Rate");
@@ -159,7 +159,7 @@ public class TSP_sm extends Algorithm{
         //ask user how often to update the screen while displaying the modified tour
         String screen_update = getInput("Update screen after how many tour updates??");
         Integer update_number = Integer.parseInt(screen_update);
-        System.out.println("the starting temprature and cooling rate are"+temp+" " +coolingRate);
+        System.out.println("the starting temperature and cooling rate are"+temp+" " +coolingRate);
         //ask the user for the type of perturbation (city/edge(2 edge,3edge))
         JList list = new JList(new String[] {"2-city exchange","edge exchange"});
         JOptionPane.showMessageDialog(null, list, "Choose Operator", JOptionPane.PLAIN_MESSAGE);
@@ -177,11 +177,11 @@ public class TSP_sm extends Algorithm{
     	curr_tour = getRandomSolution();//initial tour is chosen randomly 
         setTour(curr_tour);
     	curr_distance = costTour(curr_tour);
-        lg.addDataSet(temprature, curr_distance);
+        double time = 1;
+        lg.addDataSet(time, curr_distance);
         //start annealing
-    	while(temprature > freezingTemperature)
-    	{
-    		for(int m=0;m<10;m++)
+        while(temperature > freezingTemperature)
+    	{       for(int m=0;m<10;m++)
     		{
     	            if(choice.equals("[0]"))
                     {
@@ -198,7 +198,8 @@ public class TSP_sm extends Algorithm{
                     }
     		distance_diff =  costTour(next_tour) - curr_distance;
                 //update the tour probablistically
-    		if ((distance_diff < 0) || (distance_diff > 0 &&  Math.exp((-1*distance_diff) / temprature) > random.nextDouble()))
+                //if ((distance_diff < 0) || (distance_diff > 0 &&  Math.exp((-1*distance_diff) / temperature) > random.nextDouble()))
+    		if (Math.exp((-1*distance_diff) / temperature) > random.nextDouble())
     		{
     			update++;
                         curr_tour.clear();
@@ -211,15 +212,16 @@ public class TSP_sm extends Algorithm{
                 setTour(next_tour);
                 if(update == update_number)//display new tour after update_time modifications
                 {
-                    displayTSP(curr_distance , temprature);
+                    displayTSP(curr_distance , temperature);
                     update = 0;
                 }
-                lg.addDataSet(temprature,curr_distance);
-                System.out.println("\nTEMPRATURE: "+temprature);
+                lg.addDataSet(time,curr_distance);
+                time++;
+                System.out.println("\nTEMPRATURE: "+temperature);
                 
     		}
     		}
-    		temprature = temprature * coolingRate;//Linear cooling function
+    		temperature = temperature * coolingRate;//Linear cooling function
         }
     	
     	min_distance = curr_distance;
@@ -234,22 +236,24 @@ public class TSP_sm extends Algorithm{
     {
     	double curr_distance;
         int flag=0;
-        Double temp = 100.0;//initial temprature for annealing restart 
+        Double temp = 100.0;//initial temperature for annealing restart 
         TSPGraphV lg1 = new TSPGraphV("SIMULATED ANNEALING-RESTART",temp.toString());
         Double coolingR=0.999;//cooling rate
     	curr_tour = annealedTour;//the output of annealing process is fed here
         setTour(curr_tour);
     	curr_distance = costTour(curr_tour);
-        lg1.addDataSet(temp, curr_distance);
-        
+        double time = 1;
+        lg1.addDataSet(time, curr_distance);        
         //restart annealing
     	while(temp > freezingTemperature)
     	{
-    		for(int m=0;m<10;m++)
+                time++;
+    		for(int m=0;m<100;m++)
     		{
     	            next_tour=getNextTour2EdgeExchange(curr_tour);
                     distance_diff =  costTour(next_tour) - curr_distance;
-                    if ((distance_diff < 0) || (distance_diff > 0 &&  Math.exp((-1*distance_diff) / temp) > random.nextDouble()))
+                    //if ((distance_diff < 0) || (distance_diff > 0 &&  Math.exp((-1*distance_diff) / temp) > random.nextDouble()))
+                    if (Math.exp((-1*distance_diff) / temp) > random.nextDouble())
                     {
     			curr_tour.clear();
     			for (int i = 0; i < next_tour.size(); i++)
@@ -260,8 +264,9 @@ public class TSP_sm extends Algorithm{
                     curr_distance = distance_diff + curr_distance;
                     setTour(next_tour);
                     displayTSP(curr_distance , temp);
-                    lg1.addDataSet(temp,curr_distance);
-                    System.out.println("\nTEMPRATURE: "+temp);
+                    time++;
+                    lg1.addDataSet(time,curr_distance);
+                    System.out.println("\nTEMPERATURE: "+temp);
                 }
     		}
     		temp = temp * coolingRate;

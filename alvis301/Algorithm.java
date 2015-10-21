@@ -61,8 +61,10 @@ public abstract class Algorithm extends Thread {
                 public void run() {
                     try {
                         //System.out.println("aaaaaaaaaa"+Thread.currentThread().getName());
-                        if(type==1)
+                        if(type==1) {
                             instance1.showGraph();
+                            instance1.showGraph();
+                        }
                         else if(type==2)
                             instance2.showGraph();
                         else if(type==3)
@@ -70,14 +72,14 @@ public abstract class Algorithm extends Thread {
                     } catch (InterruptedException ex) {
                         //Thread.currentThread().interrupt();
                         //System.out.println("hi");
-                        Logger.getLogger(Algorithm.class.getName()).log(Level.SEVERE, null, ex);
+                        //Logger.getLogger(Algorithm.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             };
             SwingUtilities.invokeAndWait(showPanelRun);
             } catch ( InterruptedException ix ) {
                 //System.out.println("hi");
-                Thread.currentThread().interrupt();
+                //Thread.currentThread().interrupt();
             } catch ( InvocationTargetException x ) {
             // System.out.println("main exception thrown from run()");
         }
@@ -107,6 +109,7 @@ public abstract Object moveGen(Node parentNode);
     public void displayTSP(Double tour_cost,Double temp) {
         
         final TSPWindow instance3 = TSPWindow.getInstance();
+        tour_cost = new Double(Math.round(tour_cost*100.00) / 100.0);
         final String s = tour_cost.toString();
         final String t = temp.toString();
         try {

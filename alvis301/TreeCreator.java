@@ -135,6 +135,9 @@ public class TreeCreator {
             g.createEdge(e);
             eid++;
         }
+        System.out.println(g.getNode(root.getNodeID()).getAdjEdgeList().size());
+        if (g.getNode(root.getNodeID()).getAdjList().size() <= 2)
+            create();
         Graph.setInstance(g);
     }
 }

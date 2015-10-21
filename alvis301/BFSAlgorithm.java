@@ -48,6 +48,7 @@ public class BFSAlgorithm extends Algorithm {
              
                 ReconstructPath(nodePair);
                 display();
+                display();
                 return;
             }
             closed.add(nodePair);
@@ -66,7 +67,7 @@ public class BFSAlgorithm extends Algorithm {
             }
             }
             updateNode(node);
-            display();
+            display();display();
             ArrayList<ArrayList<Node>> children = moveGen(node);
             ArrayList<ArrayList<Node>> noLoops = removeSeen(children);
             open.addAll(noLoops);

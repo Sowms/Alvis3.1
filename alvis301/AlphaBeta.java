@@ -2,6 +2,7 @@ package alvis301;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -23,11 +24,10 @@ public class AlphaBeta extends Algorithm
     @Override
     public ArrayList<Node> moveGen(Node parentNode)
         {
-        ArrayList<Node> adjlist;
+        LinkedHashSet<Node> adjList = new LinkedHashSet(parentNode.getAdjList());
         GameNodeData gdp = (GameNodeData) parentNode.getData();
         ArrayList<Node> children = new ArrayList<Node>();
-        adjlist = parentNode.getAdjList();
-        for(Node node1 : adjlist)
+        for(Node node1 : adjList)
             {
             GameNodeData gd = (GameNodeData) node1.getData();
             if(gd.level > gdp.level)

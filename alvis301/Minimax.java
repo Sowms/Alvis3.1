@@ -2,6 +2,7 @@ package alvis301;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Minimax extends Algorithm
     
     public ArrayList<Node> moveGen(Node parentNode)
         {
-        ArrayList<Node> adjList = parentNode.getAdjList();
+        LinkedHashSet<Node> adjList = new LinkedHashSet(parentNode.getAdjList());
         GameNodeData gdp = (GameNodeData) parentNode.getData();
         ArrayList<Node> children = new ArrayList<Node>();
         for(Node node : adjList)

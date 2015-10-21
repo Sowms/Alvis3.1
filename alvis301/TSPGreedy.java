@@ -32,22 +32,25 @@ public class TSPGreedy extends Algorithm{
     public Object moveGen(Node parentNode) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public void run() {
-        
+        TSPGraphV lg1 = new TSPGraphV("Random Perturbation","1000");
         ArrayList<Node> cur = getRandomSolution();
         setTour(cur);
         int counter = 0;
-        while (counter < 20) {
+        while (counter < 1000) {
             ArrayList<Node> next = getRandomSolution();
+            lg1.addDataSet(new Double(counter), costTour(next));   
             if ( costTour(next) < costTour(cur) ) {
                 setTour(next);
                 cur = next;
-                display();
+                displayTSP(costTour(cur),new Double(0));
+                
                // printSolution(cur);
             }
+            counter++;
         }
+        lg1.displayGraph();
     }
     public void printSolution (ArrayList<Node> Tour) {
         
